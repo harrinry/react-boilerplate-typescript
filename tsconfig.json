@@ -29,6 +29,13 @@
     "sourceMap": true
   },
   "include": ["app/**/*", "internals/templates/**/*"],
-  "exclude": ["node_modules", "test", "internals/**/*.test.ts", "internals/**/*.test.tsx", "internals/**/*.uitest.ts", "internals/**/*.uitest.tsx"],
+  "exclude": [
+    "node_modules",
+    "test",
+    "internals/**/*.test.ts",
+    "internals/**/*.test.tsx",
+    "internals/**/*.uitest.ts",
+    "internals/**/*.uitest.tsx"
+  ],
   "compileOnSave": true
 }
