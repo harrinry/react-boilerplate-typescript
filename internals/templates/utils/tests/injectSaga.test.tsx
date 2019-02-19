@@ -4,12 +4,11 @@
 
 import * as React from 'react';
 
-import { put } from 'redux-saga/effects';
 import { shallow } from 'enzyme';
+import { put } from 'redux-saga/effects';
 
-
-import configureStore from '../../configureStore';
 import { createMemoryHistory } from 'history';
+import configureStore from '../../configureStore';
 import { DAEMON } from '../constants';
 
 const memoryHistory = createMemoryHistory();
@@ -52,7 +51,7 @@ describe('injectSaga decorator', () => {
 
   it('should inject given saga, mode, and props', () => {
     const props = { test: 'test' };
-    shallow(<ComponentWithSaga {...props} />, { context: { store: store } });
+    shallow(<ComponentWithSaga {...props} />, { context: { store } });
 
     expect(injectors.injectSaga).toHaveBeenCalledTimes(1);
     expect(injectors.injectSaga).toHaveBeenCalledWith(
@@ -65,7 +64,7 @@ describe('injectSaga decorator', () => {
   it('should eject on unmount with a correct saga key', () => {
     const props = { test: 'test' };
     const renderedComponent = shallow(<ComponentWithSaga {...props} />, {
-      context: { store: store },
+      context: { store },
     });
     renderedComponent.unmount();
 
@@ -83,7 +82,7 @@ describe('injectSaga decorator', () => {
   it('should propagate props', () => {
     const props = { testProp: 'test' };
     const renderedComponent = shallow(<ComponentWithSaga {...props} />, {
-      context: { store: store },
+      context: { store },
     });
 
     expect(renderedComponent.prop('testProp')).toBe('test');

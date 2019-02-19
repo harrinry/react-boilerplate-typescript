@@ -1,8 +1,8 @@
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import getInjectors from './reducerInjectors';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import { InjectReducerParams } from 'types';
+import getInjectors from './reducerInjectors';
 
 /**
  * Dynamically injects a reducer
@@ -12,8 +12,13 @@ import { InjectReducerParams } from 'types';
  *
  */
 
-export default function hocWithReducer<P>({ key, reducer }: InjectReducerParams) {
-  function wrap(WrappedComponent: React.ComponentType<P>): React.ComponentType<P> {
+export default function hocWithReducer<P>({
+  key,
+  reducer,
+}: InjectReducerParams) {
+  function wrap(
+    WrappedComponent: React.ComponentType<P>,
+  ): React.ComponentType<P> {
     // dont wanna give access to HOC. Child only
     class ReducerInjector extends React.Component<P> {
       public static WrappedComponent = WrappedComponent;

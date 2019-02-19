@@ -1,36 +1,34 @@
 {
   "compilerOptions": {
-    "noEmit": true,
-    "target": "es6",
-    "module": "esnext", //commonjs destroys 'dynamic imports' which is used for code splitting
-    "noImplicitAny": false,
-    "preserveConstEnums": true,
-    "typeRoots": ["node_modules/@types"],
-    "baseUrl": "./app",
+    "allowJs": true, // include js files
+    "allowUnreachableCode": false,
     "jsx": "react", // process JSX
     "lib": ["dom", "es5", "es6", "es7", "es2017"],
-    "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
-    "esModuleInterop": true,
-    "allowJs": true, // include js files
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    // "importHelpers": true, // importing helper functions from tslib
-    // "noEmitHelpers": true, // disable emitting inline helper functions
-    "types": ["jest", "node"],
-    "moduleResolution": "node",
-    "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
+    //"noImplicitAny": true,  <-- tons of errors turning this one on, yet its one of the most important imo
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "strict": true,
-    "strictFunctionTypes": false,
+    "noUnusedParameters": true,
+    "suppressExcessPropertyErrors": false,
+    "suppressImplicitAnyIndexErrors": false,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "typeRoots": ["node_modules/@types"],
+    "module": "esnext", //commonjs destroys 'dynamic imports' which is used for code splitting
+    "baseUrl": "./app",
+    "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["jest", "node"],
+    "moduleResolution": "node",
     "pretty": true,
-    "removeComments": true,
     "sourceMap": true
   },
   "include": ["app/**/*", "internals/templates/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "test", "internals/**/*.test.ts", "internals/**/*.test.tsx", "internals/**/*.uitest.ts", "internals/**/*.uitest.tsx"],
+  "compileOnSave": true
 }

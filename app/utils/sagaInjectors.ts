@@ -1,17 +1,20 @@
-import conformsTo from 'lodash/conformsTo';
 import invariant from 'invariant';
+import conformsTo from 'lodash/conformsTo';
 import isEmpty from 'lodash/isEmpty';
 import isFunction from 'lodash/isFunction';
 import isString from 'lodash/isString';
 
+import { LifeStore } from 'types';
 import checkStore from './checkStore';
 import { DAEMON, ONCE_TILL_UNMOUNT, RESTART_ON_REMOUNT } from './constants';
-import { LifeStore } from 'types';
 
 const allowedModes = [RESTART_ON_REMOUNT, DAEMON, ONCE_TILL_UNMOUNT];
 
 const checkKey = (key: string) =>
-  invariant(isString(key) && !isEmpty(key), '(app/utils...) injectSaga: Expected `key` to be a non empty string');
+  invariant(
+    isString(key) && !isEmpty(key),
+    '(app/utils...) injectSaga: Expected `key` to be a non empty string',
+  );
 
 interface SagaDescriptor {
   saga: () => IterableIterator<any>;
@@ -20,13 +23,21 @@ interface SagaDescriptor {
 const checkDescriptor = (descriptor: SagaDescriptor) => {
   const shape = {
     saga: isFunction,
-    mode: (mode: SagaDescriptor['mode']) => isString(mode) && allowedModes.includes(mode),
+    mode: (mode: SagaDescriptor['mode']) =>
+      isString(mode) && allowedModes.includes(mode),
   };
-  invariant(conformsTo(descriptor, shape), '(app/utils...) injectSaga: Expected a valid saga descriptor');
+  invariant(
+    conformsTo(descriptor, shape),
+    '(app/utils...) injectSaga: Expected a valid saga descriptor',
+  );
 };
 
 export function injectSagaFactory(store: LifeStore, isValid: boolean) {
-  return function injectSaga(key: string, descriptor: SagaDescriptor, args: any) {
+  return function injectSaga(
+    key: string,
+    descriptor: SagaDescriptor,
+    args: any,
+  ) {
     if (!isValid) {
       checkStore(store);
     }
@@ -51,7 +62,10 @@ export function injectSagaFactory(store: LifeStore, isValid: boolean) {
       }
     }
 
-    if (!hasSaga || (hasSaga && mode !== DAEMON && mode !== ONCE_TILL_UNMOUNT)) {
+    if (
+      !hasSaga ||
+      (hasSaga && mode !== DAEMON && mode !== ONCE_TILL_UNMOUNT)
+    ) {
       /* eslint-disable no-param-reassign */
       store.injectedSagas[key] = {
         ...newDescriptor,

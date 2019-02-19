@@ -11,26 +11,26 @@ import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError,
-} from 'containers/App/selectors';
 import H2 from 'components/H2';
 import ReposList from 'components/ReposList';
+import {
+  makeSelectError,
+  makeSelectLoading,
+  makeSelectRepos,
+} from 'containers/App/selectors';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import { loadRepos } from '../App/actions';
+import { changeUsername } from './actions';
 import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
 import Input from './Input';
-import Section from './Section';
 import messages from './messages';
-import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import Section from './Section';
+import { makeSelectUsername } from './selectors';
 import { RootState } from './types';
 
 // tslint:disable-next-line:no-empty-interface
@@ -63,9 +63,9 @@ export class HomePage extends React.PureComponent<Props> {
   public render() {
     const { loading, error, repos } = this.props;
     const reposListProps = {
-      loading: loading,
-      error: error,
-      repos: repos,
+      loading,
+      error,
+      repos,
     };
 
     return (
@@ -113,10 +113,10 @@ export class HomePage extends React.PureComponent<Props> {
   }
 }
 
-// Map Disptach to your DispatchProps
+// Map Dispatch to your DispatchProps
 export function mapDispatchToProps(
   dispatch: Dispatch,
-  ownProps: OwnProps,
+  // ownProps: OwnProps,
 ): DispatchProps {
   return {
     onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
@@ -142,8 +142,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer<OwnProps>({ key: 'home', reducer: reducer });
-const withSaga = injectSaga<OwnProps>({ key: 'home', saga: saga });
+const withReducer = injectReducer<OwnProps>({ key: 'home', reducer });
+const withSaga = injectSaga<OwnProps>({ key: 'home', saga });
 
 export default compose(
   withReducer,

@@ -7,10 +7,10 @@
  */
 
 import * as React from 'react';
+import { IntlProvider } from 'react-intl';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { IntlProvider } from 'react-intl';
 
 import { makeSelectLocale } from './selectors';
 
@@ -20,7 +20,10 @@ export interface ILanguageProviderProps {
   children?: React.ReactNode;
 }
 
-export class LanguageProvider extends React.PureComponent<ILanguageProviderProps, {}> {
+export class LanguageProvider extends React.PureComponent<
+  ILanguageProviderProps,
+  {}
+> {
   public render() {
     return (
       <IntlProvider
@@ -34,13 +37,16 @@ export class LanguageProvider extends React.PureComponent<ILanguageProviderProps
   }
 }
 
-const mapStateToProps = createSelector(makeSelectLocale(), locale => ({
-  locale: locale,
-}));
+const mapStateToProps = createSelector(
+  makeSelectLocale(),
+  locale => ({
+    locale,
+  }),
+);
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch: dispatch,
+    dispatch,
   };
 }
 export default connect(

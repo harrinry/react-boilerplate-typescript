@@ -9,12 +9,12 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import Toggle from 'components/Toggle';
-import Wrapper from './Wrapper';
-import messages from './messages';
 import { appLocales } from 'i18n';
+import { Dispatch } from 'redux';
 import { changeLocale } from '../LanguageProvider/actions';
 import { makeSelectLocale } from '../LanguageProvider/selectors';
-import { Dispatch } from 'redux';
+import messages from './messages';
+import Wrapper from './Wrapper';
 
 // tslint:disable-next-line:no-empty-interface
 interface OwnProps {}
@@ -46,14 +46,17 @@ export class LocaleToggle extends React.PureComponent<Props> {
     );
   }
 }
-const mapStateToProps = createSelector(makeSelectLocale(), locale => ({
-  locale: locale,
-}));
+const mapStateToProps = createSelector(
+  makeSelectLocale(),
+  locale => ({
+    locale,
+  }),
+);
 
 export function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     onLocaleToggle: evt => dispatch(changeLocale(evt.target.value)),
-    dispatch: dispatch,
+    dispatch,
   };
 }
 

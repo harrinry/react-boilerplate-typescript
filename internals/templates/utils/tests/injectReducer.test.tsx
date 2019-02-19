@@ -4,8 +4,8 @@ import * as React from 'react';
  * Test injectors
  */
 
-import { createMemoryHistory } from 'history';
 import { shallow } from 'enzyme';
+import { createMemoryHistory } from 'history';
 import { identity } from 'lodash';
 
 import configureStore from '../../configureStore';
@@ -36,12 +36,12 @@ describe('injectReducer decorator', () => {
     injectors = {
       injectReducer: jest.fn(),
     };
-    ComponentWithReducer = injectReducer({ key: 'test', reducer: reducer })(Component);
+    ComponentWithReducer = injectReducer({ key: 'test', reducer })(Component);
     jest.unmock('../reducerInjectors');
   });
 
   it('should inject a given reducer', () => {
-    shallow(<ComponentWithReducer />, { context: { store: store } });
+    shallow(<ComponentWithReducer />, { context: { store } });
 
     expect(injectors.injectReducer).toHaveBeenCalledTimes(1);
     expect(injectors.injectReducer).toHaveBeenCalledWith('test', reducer);
@@ -50,14 +50,14 @@ describe('injectReducer decorator', () => {
   it('should set a correct display name', () => {
     expect(ComponentWithReducer.displayName).toBe('withReducer(Component)');
     expect(
-      injectReducer({ key: 'test', reducer: reducer })(() => null).displayName,
+      injectReducer({ key: 'test', reducer })(() => null).displayName,
     ).toBe('withReducer(Component)');
   });
 
   it('should propagate props', () => {
     const props = { testProp: 'test' };
     const renderedComponent = shallow(<ComponentWithReducer {...props} />, {
-      context: { store: store },
+      context: { store },
     });
 
     expect(renderedComponent.prop('testProp')).toBe('test');

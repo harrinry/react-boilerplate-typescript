@@ -7,10 +7,11 @@
  *   script `extract-intl`, and must use CommonJS module syntax
  *   You CANNOT use import/export in this file.
  */
+// tslint:disable:no-var-requires
 const addLocaleData = require('react-intl').addLocaleData;
 const enLocaleData = require('react-intl/locale-data/en');
 const deLocaleData = require('react-intl/locale-data/de');
-
+// tslint:disable:no-var-requires
 const enTranslationMessages = require('./translations/en.json');
 
 addLocaleData(enLocaleData);
@@ -33,7 +34,7 @@ export const formatTranslationMessages = (locale, messages) => {
       !messages[key] && locale !== DEFAULT_LOCALE
         ? defaultFormattedMessages[key]
         : messages[key];
-    return {...formattedMessages,  [key]: formattedMessage};
+    return { ...formattedMessages, [key]: formattedMessage };
   };
   return Object.keys(messages).reduce(flattenFormattedMessages, {});
 };
