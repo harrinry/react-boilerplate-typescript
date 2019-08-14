@@ -8,17 +8,6 @@ module.exports = {
   description: 'Add a container component',
   prompts: [
     {
-      type: 'list',
-      name: 'type',
-      message: 'Select the base component type:',
-      default: 'Stateless Function',
-      choices: () => [
-        'Stateless Function',
-        'React.PureComponent',
-        'React.Component',
-      ],
-    },
-    {
       type: 'input',
       name: 'name',
       message: 'What should it be called?',
@@ -32,6 +21,12 @@ module.exports = {
 
         return 'The name is required';
       },
+    },
+    {
+      type: 'confirm',
+      name: 'memo',
+      default: false,
+      message: 'Do you want to wrap your component in React.memo?',
     },
     {
       type: 'confirm',
@@ -60,44 +55,26 @@ module.exports = {
     },
     {
       type: 'confirm',
-      name: 'wantLoadable',
-      default: true,
-      message: 'Do you want to load resources asynchronously?',
-    },
-    {
-      type: 'confirm',
       name: 'wantTypes',
       default: true,
-      message: 'Do you want to have types.d.ts file',
+      message: 'Do you want to have types.d.ts file?',
     },
   ],
   actions: data => {
     // Generate index.js and index.test.js
-    var componentTemplate; // eslint-disable-line no-var
-
-    switch (data.type) {
-      case 'Stateless Function': {
-        componentTemplate = './container/stateless.js.hbs';
-        break;
-      }
-      default: {
-        componentTemplate = './container/class.js.hbs';
-      }
-    }
-
     const actions = [
       {
         type: 'add',
         path: '../../app/containers/{{properCase name}}/index.tsx',
-        templateFile: componentTemplate,
+        templateFile: './container/index.js.hbs',
         abortOnFail: true,
       },
-      {
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/tests/index.test.ts',
-        templateFile: './container/test.js.hbs',
-        abortOnFail: true,
-      },
+      // {
+      //   type: 'add',
+      //   path: '../../app/containers/{{properCase name}}/tests/index.test.ts',
+      //   templateFile: './container/test.js.hbs',
+      //   abortOnFail: true,
+      // },
     ];
 
     // If component wants messages
@@ -120,12 +97,12 @@ module.exports = {
         templateFile: './container/actions.js.hbs',
         abortOnFail: true,
       });
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/tests/actions.test.ts',
-        templateFile: './container/actions.test.js.hbs',
-        abortOnFail: true,
-      });
+      // actions.push({
+      //   type: 'add',
+      //   path: '../../app/containers/{{properCase name}}/tests/actions.test.ts',
+      //   templateFile: './container/actions.test.js.hbs',
+      //   abortOnFail: true,
+      // });
 
       // Constants
       actions.push({
@@ -142,13 +119,13 @@ module.exports = {
         templateFile: './container/selectors.js.hbs',
         abortOnFail: true,
       });
-      actions.push({
-        type: 'add',
-        path:
-          '../../app/containers/{{properCase name}}/tests/selectors.test.ts',
-        templateFile: './container/selectors.test.js.hbs',
-        abortOnFail: true,
-      });
+      // actions.push({
+      //   type: 'add',
+      //   path:
+      //     '../../app/containers/{{properCase name}}/tests/selectors.test.ts',
+      //   templateFile: './container/selectors.test.js.hbs',
+      //   abortOnFail: true,
+      // });
 
       // Reducer
       actions.push({
@@ -157,12 +134,12 @@ module.exports = {
         templateFile: './container/reducer.js.hbs',
         abortOnFail: true,
       });
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/tests/reducer.test.ts',
-        templateFile: './container/reducer.test.js.hbs',
-        abortOnFail: true,
-      });
+      // actions.push({
+      //   type: 'add',
+      //   path: '../../app/containers/{{properCase name}}/tests/reducer.test.ts',
+      //   templateFile: './container/reducer.test.js.hbs',
+      //   abortOnFail: true,
+      // });
     }
 
     // Sagas
@@ -173,12 +150,12 @@ module.exports = {
         templateFile: './container/saga.js.hbs',
         abortOnFail: true,
       });
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/tests/saga.test.ts',
-        templateFile: './container/saga.test.js.hbs',
-        abortOnFail: true,
-      });
+      // actions.push({
+      //   type: 'add',
+      //   path: '../../app/containers/{{properCase name}}/tests/saga.test.ts',
+      //   templateFile: './container/saga.test.js.hbs',
+      //   abortOnFail: true,
+      // });
     }
 
     if (data.wantLoadable) {

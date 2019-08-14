@@ -14,11 +14,12 @@ if (!shell.test('-e', 'internals/templates')) {
 process.stdout.write('Cleanup started...');
 
 // Reuse existing LanguageProvider and i18n tests
-shell.mv(
-  'app/containers/LanguageProvider/tests',
-  'internals/templates/containers/LanguageProvider',
-);
-shell.cp('app/tests/i18n.test.js', 'internals/templates/tests/i18n.test.js');
+// FIXME: fix the tests
+// shell.mv(
+//   'app/containers/LanguageProvider/tests',
+//   'internals/templates/containers/LanguageProvider',
+// );
+// shell.cp('app/tests/i18n.test.js', 'internals/templates/tests/i18n.test.js');
 
 // Cleanup components/
 shell.rm('-rf', 'app/components/*');
@@ -28,7 +29,8 @@ shell.rm('-rf', 'app/containers');
 shell.mv('internals/templates/containers', 'app');
 
 // Handle tests/
-shell.mv('internals/templates/tests', 'app');
+// FIXME: fix the tests
+// shell.mv('internals/templates/tests', 'app');
 
 // Handle translations/
 shell.rm('-rf', 'app/translations');
@@ -54,12 +56,12 @@ shell.rm('-rf', 'internals/templates');
 addCheckMark();
 
 // Commit the changes
-if (
-  shell.exec('git add . --all && git commit -qm "Remove default example"')
-    .code !== 0
-) {
-  shell.echo('\nError: Git commit failed');
-  shell.exit(1);
-}
+// if (
+//   shell.exec('git add . --all && git commit -qm "Remove default example"')
+//     .code !== 0
+// ) {
+//   shell.echo('\nError: Git commit failed');
+//   shell.exit(1);
+// }
 
 shell.echo('\nCleanup done. Happy Coding!!!');
