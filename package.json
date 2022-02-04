@@ -150,7 +150,7 @@
     "circular-dependency-plugin": "5.0.2",
     "compare-versions": "3.4.0",
     "compression-webpack-plugin": "2.0.0",
-    "coveralls": "3.0.3",
+    "coveralls": "3.0.4",
     "css-loader": "2.1.1",
     "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "1.12.1",
